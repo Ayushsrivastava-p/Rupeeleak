@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RupeeLeak — 30-Second Personal Finance & Hidden Fee Auditor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    input[type="range"] { accent-color: #10b981; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-emerald-500 selection:text-slate-950">
+
+  <!-- Navbar -->
+  <header class="border-b border-slate-800/80 bg-slate-950/80 backdrop-blur sticky top-0 z-20">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="bg-emerald-500 text-slate-950 font-extrabold px-2.5 py-1 rounded-lg text-sm">₹</span>
+        <span class="font-bold text-lg tracking-tight">Rupee<span class="text-emerald-400">Leak</span></span>
+      </div>
+      <div class="flex items-center gap-3">
+        <span class="hidden sm:inline-block text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">
+          🔒 100% Client-Side • Zero Bank Login
+        </span>
+        <button onclick="toggleApiModal()" class="text-xs font-medium text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 bg-emerald-500/10 px-3 py-1.5 rounded-lg transition">
+          ⚙️ Gemini Key
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Optional API Key Drawer -->
+  <div id="apiModal" class="hidden max-w-5xl mx-auto px-4 pt-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="text-xs text-slate-300">
+        <strong class="text-white">Optional AI Upgrade:</strong> Paste a Google AI Studio API key for custom Gemini 3.8 Flash insights (works automatically via built-in FinTech engine if left blank).
+      </div>
+      <div class="flex w-full sm:w-auto gap-2">
+        <input id="apiKeyInput" type="password" placeholder="AIzaSy..." class="bg-slate-950 border border-slate-700 rounded-lg px-3 py-1.5 text-xs w-full sm:w-64 focus:outline-none focus:border-emerald-500" />
+        <button onclick="saveApiKey()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-semibold text-xs px-4 py-1.5 rounded-lg transition">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <main class="max-w-5xl mx-auto px-4 py-8 sm:py-12">
+    <div class="text-center max-w-2xl mx-auto mb-10">
+      <div class="inline-flex items-center gap-2 text-xs font-medium text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full mb-4">
+        Built for Indian Earners & Students
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white mb-3">
+        How much money are you silently losing every year?
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base">
+        Adjust 6 quick sliders. Uncover hidden losses from idle savings cash, mismatched credit cards, and tax regime gaps—without sharing any bank data.
+      </p>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Left: 6-Input Audit Form -->
+      <section class="lg:col-span-6 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-xl">
+        <h2 class="text-base font-semibold text-white border-b border-slate-800 pb-3">1. Your Monthly Snapshot</h2>
+
+        <!-- Slider 1: Take Home -->
+        <div>
+          <div class="flex justify-between text-sm mb-1.5">
+            <label class="text-slate-300 font-medium">Monthly Take-Home / Allowance</label>
+            <span id="incomeVal" class="font-bold text-emerald-400">₹75,000</span>
+          </div>
+          <input id="income" type="range" min="10000" max="300000" step="5000" value="75000" oninput="calculateLeaks()" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Slider 2: Idle Savings Balance -->
+        <div>
+          <div class="flex justify-between text-sm mb-1.5">
+            <label class="text-slate-300 font-medium">Avg. Idle Savings Account Balance</label>
+            <span id="savingsVal" class="font-bold text-emerald-400">₹1,50,000</span>
+          </div>
+          <input id="savings" type="range" min="0" max="1000000" step="10000" value="150000" oninput="calculateLeaks()" class="w-full cursor-pointer" />
+          <p class="text-[11px] text-slate-500 mt-1">Cash sitting at ~2.7% interest instead of auto-sweep FD / liquid funds (~7%).</p>
+        </div>
+
+        <!-- Slider 3: Monthly Card/UPI Spend -->
+        <div>
+          <div class="flex justify-between text-sm mb-1.5">
+            <label class="text-slate-300 font-medium">Monthly Discretionary Spend (UPI + Cards)</label>
+            <span id="spendVal" class="font-bold text-emerald-400">₹30,000</span>
+          </div>
+          <input id="spend" type="range" min="2000" max="150000" step="2000" value="30000" oninput="calculateLeaks()" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Slider 4: Monthly Rent -->
+        <div>
+          <div class="flex justify-between text-sm mb-1.5">
+            <label class="text-slate-300 font-medium">Monthly Rent Paid</label>
+            <span id="rentVal" class="font-bold text-emerald-400">₹18,000</span>
+          </div>
+          <input id="rent" type="range" min="0" max="80000" step="2000" value="18000" oninput="calculateLeaks()" class="w-full cursor-pointer" />
+        </div>
+
+        <!-- Select 5 & 6 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Primary Payment Mode</label>
+            <select id="cardTier" onchange="calculateLeaks()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+              <option value="upi">Only UPI / Debit Card (0% rewards)</option>
+              <option value="basic" selected>Basic Credit Card (~0.5% reward)</option>
+              <option value="optimized">Reward/Cashback Card (~3%+)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Tax Regime Status</label>
+            <select id="taxRegime" onchange="calculateLeaks()" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500">
+              <option value="unsure" selected>Haven't Compared / Default</option>
+              <option value="old">Old Regime (No 80C/HRA check)</option>
+              <option value="new">Optimized New Regime</option>
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Live Leakage Dashboard + Viral Card -->
+      <section class="lg:col-span-6 space-y-6">
+        
+        <!-- Shareable Score Card -->
+        <div id="shareCard" class="bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/40 border border-slate-800 rounded-2xl p-6 shadow-2xl relative overflow-hidden">
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Annual Money Leak</span>
+            <span id="scoreBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
+              Efficiency: 64/100
+            </span>
+          </div>
+
+          <div class="mb-6">
+            <div id="totalLeakDisplay" class="text-4xl sm:text-5xl font-extrabold text-rose-400 tracking-tight">
+              ₹24,450<span class="text-base font-normal text-slate-400">/yr</span>
+            </div>
+            <p id="fiveYearImpact" class="text-xs text-slate-400 mt-1.5">
+              Compounded at 12% over 5 years, this leak costs you <strong class="text-white">₹1,55,320</strong>.
+            </p>
+          </div>
+
+          <!-- 3 Breakdown Bars -->
+          <div class="space-y-4 mb-6">
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-300">1. Idle Cash Yield Gap</span>
+                <span id="idleLeakText" class="font-semibold text-rose-300">₹4,300/yr</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="idleBar" class="bg-rose-500 h-full rounded-full transition-all duration-300" style="width: 35%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-300">2. Missed Card / UPI Rewards</span>
+                <span id="rewardLeakText" class="font-semibold text-amber-300">₹9,000/yr</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="rewardBar" class="bg-amber-400 h-full rounded-full transition-all duration-300" style="width: 50%"></div>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between text-xs mb-1">
+                <span class="text-slate-300">3. Tax / HRA Optimization Gap</span>
+                <span id="taxLeakText" class="font-semibold text-indigo-300">₹11,150/yr</span>
+              </div>
+              <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                <div id="taxBar" class="bg-indigo-400 h-full rounded-full transition-all duration-300" style="width: 60%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-3">
+            <button onclick="generateAIPlan()" id="aiBtn" class="flex-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm py-3 px-4 rounded-xl transition shadow-lg shadow-emerald-500/10">
+              ✨ Generate 3-Step Fix Plan
+            </button>
+            <button onclick="copyShareSummary()" id="shareBtn" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm py-3 px-4 rounded-xl border border-slate-700 transition">
+              📋 Share Result
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Action Plan Output Box -->
+        <div id="aiResultBox" class="bg-slate-900 border border-slate-800 rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-bold text-emerald-400">⚡ Personalized Recovery Playbook</h3>
+            <span id="engineTag" class="text-[11px] text-slate-500">Smart FinTech Engine</span>
+          </div>
+          <div id="aiContent" class="text-sm text-slate-300 space-y-2.5 leading-relaxed">
+            Click <strong class="text-white">"Generate 3-Step Fix Plan"</strong> above to get an actionable roadmap tailored to your exact numbers.
+          </div>
+        </div>
+
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-14 pt-6 border-t border-slate-900 text-center text-xs text-slate-500">
+      Built by <strong class="text-slate-300">Ayush Srivastava</strong> • Educational simulation only; not SEBI-registered investment advice.
+    </footer>
+  </main>
+
+  <script>
+    const fmt = (num) => '₹' + Math.round(num).toLocaleString('en-IN');
+    let latestState = {};
+
+    function toggleApiModal() {
+      document.getElementById('apiModal').classList.toggle('hidden');
+    }
+
+    function saveApiKey() {
+      const key = document.getElementById('apiKeyInput').value.trim();
+      if (key) {
+        localStorage.setItem('rupeeleak_gemini_key', key);
+        alert('Gemini API Key saved locally in your browser!');
+        toggleApiModal();
+      }
+    }
+
+    function calculateLeaks() {
+      const income = Number(document.getElementById('income').value);
+      const savings = Number(document.getElementById('savings').value);
+      const spend = Number(document.getElementById('spend').value);
+      const rent = Number(document.getElementById('rent').value);
+      const cardTier = document.getElementById('cardTier').value;
+      const taxRegime = document.getElementById('taxRegime').value;
+
+      // Update labels
+      document.getElementById('incomeVal').innerText = fmt(income);
+      document.getElementById('savingsVal').innerText = fmt(savings);
+      document.getElementById('spendVal').innerText = fmt(spend);
+      document.getElementById('rentVal').innerText = fmt(rent);
+
+      // 1. Idle Cash Leak: Anything above 1 month emergency buffer loses ~4.3% yield (7.0% sweep FD vs 2.7% savings)
+      const excessCash = Math.max(0, savings - income);
+      const idleLeak = excessCash * 0.043;
+
+      // 2. Card/UPI Reward Leak: Optimal blended reward is ~3%
+      const rateMap = { upi: 0.0, basic: 0.005, optimized: 0.03 };
+      const currentRate = rateMap[cardTier];
+      const rewardLeak = Math.max(0, (spend * 12) * (0.03 - currentRate));
+
+      // 3. Tax / HRA Gap (applicable if annual income > ₹7.5L)
+      const annualIncome = income * 12;
+      let taxLeak = 0;
+      if (annualIncome > 750000) {
+        if (taxRegime === 'unsure') taxLeak = Math.min(25000, annualIncome * 0.012);
+        else if (taxRegime === 'old' && rent < income * 0.2) taxLeak = Math.min(18000, annualIncome * 0.01);
+        else if (taxRegime === 'new' && rent > income * 0.35) taxLeak = Math.min(15000, annualIncome * 0.008);
+      }
+
+      const totalLeak = idleLeak + rewardLeak + taxLeak;
+      const fiveYearFV = totalLeak * (((Math.pow(1.12, 5) - 1) / 0.12));
+
+      // Efficiency Score (100 minus penalty ratio)
+      const leakRatio = totalLeak / Math.max(1, annualIncome);
+      const score = Math.max(18, Math.min(98, Math.round(100 - (leakRatio * 650))));
+
+      // Update UI
+      document.getElementById('totalLeakDisplay').innerHTML = `${fmt(totalLeak)}<span class="text-base font-normal text-slate-400">/yr</span>`;
+      document.getElementById('fiveYearImpact').innerHTML = `Compounded at 12% over 5 years, this leak costs you <strong class="text-white">${fmt(fiveYearFV)}</strong>.`;
+      document.getElementById('scoreBadge').innerText = `Efficiency: ${score}/100`;
+
+      document.getElementById('idleLeakText').innerText = `${fmt(idleLeak)}/yr`;
+      document.getElementById('rewardLeakText').innerText = `${fmt(rewardLeak)}/yr`;
+      document.getElementById('taxLeakText').innerText = `${fmt(taxLeak)}/yr`;
+
+      const maxBar = Math.max(1, totalLeak);
+      document.getElementById('idleBar').style.width = `${Math.min(100, (idleLeak / maxBar) * 100)}%`;
+      document.getElementById('rewardBar').style.width = `${Math.min(100, (rewardLeak / maxBar) * 100)}%`;
+      document.getElementById('taxBar').style.width = `${Math.min(100, (taxLeak / maxBar) * 100)}%`;
+
+      latestState = { income, savings, spend, rent, cardTier, taxRegime, idleLeak, rewardLeak, taxLeak, totalLeak, score };
+    }
+
+    function getFallbackPlan(s) {
+      const steps = [];
+      if (s.idleLeak > 1000) {
+        steps.push(`<li><strong class="text-white">Activate Auto-Sweep FD:</strong> Move ${fmt(s.savings - s.income)} excess cash out of your regular savings account into an auto-sweep FD or overnight liquid fund to recover <strong>${fmt(s.idleLeak)}/yr</strong> with zero lock-in.</li>`);
+      } else {
+        steps.push(`<li><strong class="text-white">Build 3x Emergency Buffer:</strong> Keep your ${fmt(s.savings)} buffer intact and route monthly surplus into an automated index SIP.</li>`);
+      }
+
+      if (s.rewardLeak > 1500) {
+        steps.push(`<li><strong class="text-white">Upgrade Your Primary Spend Stack:</strong> Shifting ${fmt(s.spend)}/mo from ${s.cardTier.toUpperCase()} to a flat 2–5% cashback or RuPay UPI credit card recovers <strong>${fmt(s.rewardLeak)}/yr</strong> in direct statement credit.</li>`);
+      } else {
+        steps.push(`<li><strong class="text-white">Maintain Reward Discipline:</strong> Keep auto-debit enabled so reward gains aren't wiped out by late fees.</li>`);
+      }
+
+      if (s.taxLeak > 0) {
+        steps.push(`<li><strong class="text-white">Run a Regime & HRA Audit:</strong> With ${fmt(s.rent)}/mo rent and ${fmt(s.income * 12)} annual income, comparing Old (HRA + 80C) vs. New Regime slabs before payroll lock-in can save <strong>${fmt(s.taxLeak)}/yr</strong>.</li>`);
+      } else {
+        steps.push(`<li><strong class="text-white">Automate Payday Split:</strong> Transfer 20% of income on the 1st of every month before discretionary spending starts.</li>`);
+      }
+
+      return `<ul class="list-disc pl-5 space-y-2">${steps.join('')}</ul>`;
+    }
+
+    async function generateAIPlan() {
+      const btn = document.getElementById('aiBtn');
+      const content = document.getElementById('aiContent');
+      const engineTag = document.getElementById('engineTag');
+      const apiKey = localStorage.getItem('rupeeleak_gemini_key');
+
+      btn.disabled = true;
+      btn.innerText = 'Analyzing leaks...';
+
+      if (!apiKey) {
+        setTimeout(() => {
+          content.innerHTML = getFallbackPlan(latestState);
+          engineTag.innerText = 'Instant Rule Engine (Add Gemini Key for LLM)';
+          btn.disabled = false;
+          btn.innerText = '✨ Regenerate Fix Plan';
+        }, 350);
+        return;
+      }
+
+      const prompt = `You are a sharp Indian FinTech advisor. A user has: Monthly take-home ${fmt(latestState.income)}, idle savings ${fmt(latestState.savings)}, monthly spend ${fmt(latestState.spend)}, rent ${fmt(latestState.rent)}, payment mode: ${latestState.cardTier}, tax status: ${latestState.taxRegime}. Annual leaks: Idle Cash ${fmt(latestState.idleLeak)}, Card Rewards ${fmt(latestState.rewardLeak)}, Tax Gap ${fmt(latestState.taxLeak)} (Total ${fmt(latestState.totalLeak)}/yr). Give 3 crisp, high-impact bullet points with exact Indian financial instruments (sweep-in FD, RuPay UPI cards, New vs Old regime). Keep under 120 words, HTML <ul><li> tags only.`;
+
+      try {
+        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.8-flash:generateContent?key=${apiKey}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+        });
+        const data = await res.json();
+        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (reply) {
+          content.innerHTML = reply.replace(/```html|```/g, '');
+          engineTag.innerText = 'Powered by Gemini 3.8 Flash';
+        } else {
+          throw new Error('Fallback triggered');
+        }
+      } catch (e) {
+        content.innerHTML = getFallbackPlan(latestState);
+        engineTag.innerText = 'Smart Fallback Engine';
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '✨ Regenerate Fix Plan';
+      }
+    }
+
+    function copyShareSummary() {
+      const text = `💸 I just audited my finances on RupeeLeak (zero bank login) and found ${fmt(latestState.totalLeak)}/year in hidden money leaks (Score: ${latestState.score}/100)!\n\nCheck yours in 30 seconds 👉 ${window.location.href}`;
+      navigator.clipboard.writeText(text);
+      const btn = document.getElementById('shareBtn');
+      btn.innerText = '✅ Copied!';
+      setTimeout(() => btn.innerText = '📋 Share Result', 2000);
+    }
+
+    // Initialize on load
+    calculateLeaks();
+  </script>
+</body>
+</html>
