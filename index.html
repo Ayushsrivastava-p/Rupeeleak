@@ -14,14 +14,11 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-emerald-100 selection:text-emerald-900">
 
-  <!-- Top Navigation Bar (Groww / Zerodha Style) -->
+  <!-- Top Navigation Bar -->
   <header class="bg-white border-b border-slate-200 sticky top-0 z-30">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-      <!-- Brand -->
       <div class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">
-          ₹
-        </div>
+        <div class="w-9 h-9 rounded-xl bg-emerald-600 text-white font-extrabold flex items-center justify-center text-lg shadow-sm">₹</div>
         <div>
           <span class="font-extrabold text-xl tracking-tight text-slate-900">Rupee<span class="text-emerald-600">Leak</span></span>
           <span class="hidden md:inline-block ml-2 text-[11px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
@@ -30,7 +27,6 @@
         </div>
       </div>
 
-      <!-- Right Controls: Trust Pill + Language Toggle -->
       <div class="flex items-center gap-3">
         <span id="trustBadge" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span> No Bank Login Required
@@ -49,25 +45,24 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
   <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
     <div class="text-center max-w-2xl mx-auto mb-8">
       <h1 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-2.5">
         Stop losing money silently every year.
       </h1>
       <p id="heroSub" class="text-slate-600 text-sm sm:text-base">
-        Check where your money is leaking in 30 seconds and see how much wealth you can build—no jargon, no bank login.
+        Check where your money is leaking in 30 seconds and get an instant wealth plan built from your own numbers.
       </p>
     </div>
 
-    <!-- Clean Navigation Tabs -->
+    <!-- Navigation Tabs -->
     <div class="flex justify-center mb-8">
       <div class="bg-white p-1.5 rounded-2xl border border-slate-200 card-shadow inline-flex gap-1.5">
-        <button onclick="switchTab('leak')" id="tabLeak" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-sm transition">
+        <button onclick="switchTab('leak', false)" id="tabLeak" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-sm transition">
           1. Money Leak Check
         </button>
-        <button onclick="switchTab('future')" id="tabFuture" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 transition">
-          2. Future Wealth Planner
+        <button onclick="switchTab('future', true)" id="tabFuture" class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 transition">
+          2. Your Auto-Built Wealth Plan
         </button>
       </div>
     </div>
@@ -77,14 +72,13 @@
     <!-- ========================================================= -->
     <div id="sectionLeak" class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
       
-      <!-- Left Card: Clean Inputs -->
+      <!-- Left Inputs -->
       <section class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 card-shadow space-y-6">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
           <h2 id="s1CardTitle" class="text-base font-bold text-slate-900">Your Monthly Snapshot</h2>
           <span id="s1StepTag" class="text-xs font-semibold text-slate-400">5 Quick Inputs</span>
         </div>
 
-        <!-- Slider 1: Income -->
         <div>
           <div class="flex justify-between items-center mb-2">
             <label id="lblIncome" class="text-sm font-semibold text-slate-700">Monthly Take-Home Income</label>
@@ -93,7 +87,6 @@
           <input id="income" type="range" min="5000" max="300000" step="2500" value="50000" oninput="runAllMath()" class="w-full cursor-pointer bg-slate-200" />
         </div>
 
-        <!-- Slider 2: Savings -->
         <div>
           <div class="flex justify-between items-center mb-2">
             <label id="lblSavings" class="text-sm font-semibold text-slate-700">Avg. Savings Account Balance</label>
@@ -103,7 +96,6 @@
           <p id="hintSavings" class="text-xs text-slate-500 mt-1.5">Regular savings pay ~2.7% interest vs ~7% in Auto-Sweep FD.</p>
         </div>
 
-        <!-- Slider 3: Monthly Spend -->
         <div>
           <div class="flex justify-between items-center mb-2">
             <label id="lblSpend" class="text-sm font-semibold text-slate-700">Monthly Bills & Shopping Spend</label>
@@ -112,7 +104,6 @@
           <input id="spend" type="range" min="2000" max="150000" step="1000" value="20000" oninput="runAllMath()" class="w-full cursor-pointer bg-slate-200" />
         </div>
 
-        <!-- Slider 4: Rent -->
         <div>
           <div class="flex justify-between items-center mb-2">
             <label id="lblRent" class="text-sm font-semibold text-slate-700">Monthly House / Room Rent</label>
@@ -121,7 +112,6 @@
           <input id="rent" type="range" min="0" max="60000" step="1000" value="12000" oninput="runAllMath()" class="w-full cursor-pointer bg-slate-200" />
         </div>
 
-        <!-- Dropdowns (Full Width Stacked so text never cuts off) -->
         <div class="space-y-4 pt-1">
           <div>
             <label id="lblCard" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">How do you pay for daily spends?</label>
@@ -142,10 +132,8 @@
         </div>
       </section>
 
-      <!-- Right Column: Crisp Dashboard + Action Plan -->
+      <!-- Right Results -->
       <section class="lg:col-span-7 space-y-6">
-        
-        <!-- Summary Card -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 card-shadow">
           <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
             <span id="lblAnnualLeak" class="text-xs font-bold uppercase tracking-wider text-slate-500">Estimated Annual Money Leak</span>
@@ -154,19 +142,16 @@
             </span>
           </div>
 
-          <!-- Big Hero Number -->
-          <div class="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 pb-5 border-b border-slate-100">
-            <div>
-              <div id="totalLeakDisplay" class="text-4xl sm:text-5xl font-extrabold text-rose-600 tracking-tight">
-                ₹7,810<span class="text-base font-semibold text-slate-400">/yr</span>
-              </div>
-              <p id="fiveYearImpact" class="text-xs sm:text-sm text-slate-600 mt-1.5">
-                If invested instead, this grows to <strong class="text-emerald-700">₹49,616</strong> in 5 years.
-              </p>
+          <div class="pb-5 border-b border-slate-100">
+            <div id="totalLeakDisplay" class="text-4xl sm:text-5xl font-extrabold text-rose-600 tracking-tight">
+              ₹7,810<span class="text-base font-semibold text-slate-400">/yr</span>
             </div>
+            <p id="fiveYearImpact" class="text-xs sm:text-sm text-slate-600 mt-1.5">
+              If invested instead, this grows to <strong class="text-emerald-700">₹49,616</strong> in 5 years.
+            </p>
           </div>
 
-          <!-- 3 Crisp Breakdown Rows -->
+          <!-- 3 Breakdown Bars -->
           <div class="py-5 space-y-4">
             <div>
               <div class="flex justify-between text-xs sm:text-sm font-semibold mb-1.5">
@@ -201,7 +186,7 @@
 
           <!-- CTA Buttons -->
           <div class="flex flex-col sm:flex-row gap-3 pt-2">
-            <button onclick="switchTab('future')" id="btnGoInvest" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3.5 px-5 rounded-xl shadow-sm transition">
+            <button onclick="switchTab('future', true)" id="btnGoInvest" class="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-3.5 px-5 rounded-xl shadow-sm transition">
               Invest This Saved Money →
             </button>
             <button onclick="copyShareSummary()" id="shareBtn" class="bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-sm py-3.5 px-5 rounded-xl transition">
@@ -210,144 +195,156 @@
           </div>
         </div>
 
-        <!-- Action Checklist Card -->
+        <!-- 3 Action Steps -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 card-shadow">
           <h3 id="lblFixesTitle" class="text-sm font-bold text-slate-900 mb-3 flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-emerald-500"></span> 3 Simple Steps to Fix This Today
           </h3>
           <div id="simpleSteps" class="space-y-3 text-xs sm:text-sm text-slate-600"></div>
         </div>
-
       </section>
     </div>
 
     <!-- ========================================================= -->
-    <!-- SCREEN 2: FUTURE WEALTH PLANNER (CLEAR & VISUAL)          -->
+    <!-- SCREEN 2: AUTO-BUILT WEALTH PLAN (SYNCED FROM SCREEN 1)   -->
     <!-- ========================================================= -->
-    <div id="sectionFuture" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
+    <div id="sectionFuture" class="hidden space-y-6">
       
-      <!-- Left Inputs -->
-      <section class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 card-shadow space-y-6">
-        <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
-          <h2 id="s2CardTitle" class="text-base font-bold text-slate-900">Plan Your Future Goal</h2>
-          <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md">SIP + Step-Up</span>
+      <!-- Top Context Banner: Shows exact carry-forward from Screen 1 -->
+      <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 sm:px-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+        <div class="flex items-start sm:items-center gap-3">
+          <div class="w-8 h-8 rounded-lg bg-emerald-600 text-white font-bold flex items-center justify-center shrink-0">✓</div>
+          <p id="autoSyncBanner" class="text-xs sm:text-sm text-emerald-950 font-medium">
+            Auto-built using your Screen 1 data: <strong>₹50,000/mo income</strong>, <strong>₹70,000 idle bank cash</strong>, and <strong>₹7,810/yr saved leak</strong>.
+          </p>
         </div>
+        <button onclick="syncFromLeakScreen()" id="btnResetSync" class="text-xs font-bold text-emerald-700 hover:text-emerald-900 underline shrink-0">
+          Re-sync Screen 1 Data
+        </button>
+      </div>
 
-        <!-- Monthly SIP -->
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label id="lblSip" class="text-sm font-semibold text-slate-700">Monthly Investment (SIP)</label>
-            <span id="sipVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">₹5,000</span>
-          </div>
-          <input id="sipAmount" type="range" min="500" max="100000" step="500" value="5000" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
-        </div>
-
-        <!-- Yearly Step-up -->
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label id="lblStepUp" class="text-sm font-semibold text-slate-700">Yearly SIP Increase (Step-Up)</label>
-            <span id="stepUpVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">10%</span>
-          </div>
-          <input id="stepUp" type="range" min="0" max="25" step="1" value="10" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
-          <p id="hintStepUp" class="text-xs text-slate-500 mt-1.5">Increasing SIP by 10% every year as salary grows nearly doubles your final wealth.</p>
-        </div>
-
-        <!-- Duration -->
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label id="lblYears" class="text-sm font-semibold text-slate-700">Time Period (Years)</label>
-            <span id="yearsVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">15 Years</span>
-          </div>
-          <input id="years" type="range" min="3" max="30" step="1" value="15" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
-        </div>
-
-        <!-- Investment Style -->
-        <div>
-          <label id="lblRisk" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Where will you invest?</label>
-          <select id="riskProfile" onchange="runForecast()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-600 focus:bg-white">
-            <option value="safe">Safe (FD / Debt Mutual Fund • ~7.5% return)</option>
-            <option value="balanced" selected>Balanced (Nifty Index + Gold • ~11.5% return)</option>
-            <option value="growth">High Growth (Equity / Flexi Cap • ~14% return)</option>
-          </select>
-        </div>
-
-        <!-- Target Goal -->
-        <div>
-          <div class="flex justify-between items-center mb-2">
-            <label id="lblGoal" class="text-sm font-semibold text-slate-700">Your Target Goal Amount</label>
-            <span id="goalVal" class="text-sm font-bold text-amber-700 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-lg">₹35,00,000</span>
-          </div>
-          <input id="goalAmount" type="range" min="200000" max="50000000" step="100000" value="3500000" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
-        </div>
-      </section>
-
-      <!-- Right Column: Visual Growth & Crystal Clear Goal Guidance -->
-      <section class="lg:col-span-7 space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-start">
         
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 card-shadow">
-          <!-- Top Header -->
-          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-            <span id="lblProjectedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-500">Estimated Wealth After <span id="yrSpan">15</span> Years</span>
-            <span id="probBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
-              Goal Success Chance: 88%
-            </span>
+        <!-- Left: Auto-Populated Plan Controls (Optional Tweak) -->
+        <section class="lg:col-span-5 bg-white border border-slate-200 rounded-2xl p-6 card-shadow space-y-5">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+            <h2 id="s2CardTitle" class="text-base font-bold text-slate-900">Your Personalized Plan</h2>
+            <span id="s2Badge" class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-md">Auto-Filled</span>
           </div>
 
-          <!-- Big Corpus Number -->
-          <div id="finalCorpusDisplay" class="text-4xl sm:text-5xl font-extrabold text-emerald-600 tracking-tight mb-4">
-            ₹42,18,500
+          <!-- Auto Lump Sum from Excess Bank Cash -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label id="lblLump" class="text-sm font-semibold text-slate-700">1. Day-1 Lump Sum (Excess Bank Cash)</label>
+              <span id="lumpVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">₹70,000</span>
+            </div>
+            <input id="lumpAmount" type="range" min="0" max="1000000" step="5000" value="70000" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
+            <p id="hintLump" class="text-[11px] text-slate-500 mt-1">Taken from your idle bank balance above 1-month emergency buffer.</p>
           </div>
 
-          <!-- 3-Column Metric Strip (Fintech Standard) -->
-          <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 mb-6">
-            <div>
-              <span id="lblMetricInv" class="text-[11px] font-semibold text-slate-500 block">You Invested</span>
-              <span id="investedText" class="text-sm sm:text-base font-bold text-slate-900">₹19,06,300</span>
+          <!-- Auto Monthly SIP (Saved Leak + 20% Monthly Surplus) -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label id="lblSip" class="text-sm font-semibold text-slate-700">2. Monthly SIP (Saved Leak + Surplus)</label>
+              <span id="sipVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">₹4,500</span>
             </div>
-            <div>
-              <span id="lblMetricGain" class="text-[11px] font-semibold text-slate-500 block">Wealth Gained</span>
-              <span id="profitText" class="text-sm sm:text-base font-bold text-emerald-600">+₹23,12,200</span>
-            </div>
-            <div>
-              <span id="lblMetricMult" class="text-[11px] font-semibold text-slate-500 block">Money Growth</span>
-              <span id="multiplierText" class="text-sm sm:text-base font-bold text-slate-900">2.2x</span>
-            </div>
+            <input id="sipAmount" type="range" min="500" max="150000" step="500" value="4500" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
+            <p id="hintSip" class="text-[11px] text-slate-500 mt-1">Combines your recovered leak + 20% of your monthly leftover cash.</p>
           </div>
 
-          <!-- Year-by-Year Mini Bar Chart (Pure CSS, Zero External Library) -->
-          <div class="mb-6">
-            <div class="flex justify-between items-center text-xs font-semibold text-slate-500 mb-2">
-              <span id="lblChartTitle">How Your Money Grows Over Time</span>
-              <span class="flex items-center gap-3 text-[11px]">
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-slate-300 inline-block"></span> <span id="legInv">Invested</span></span>
-                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block"></span> <span id="legProfit">Profit</span></span>
+          <!-- Yearly Step-up -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label id="lblStepUp" class="text-sm font-semibold text-slate-700">3. Yearly SIP Increase (Step-Up)</label>
+              <span id="stepUpVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">10%</span>
+            </div>
+            <input id="stepUp" type="range" min="0" max="25" step="1" value="10" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
+          </div>
+
+          <!-- Duration -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label id="lblYears" class="text-sm font-semibold text-slate-700">4. Investment Time Period</label>
+              <span id="yearsVal" class="text-sm font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-lg">15 Years</span>
+            </div>
+            <input id="years" type="range" min="3" max="30" step="1" value="15" oninput="runForecast()" class="w-full cursor-pointer bg-slate-200" />
+          </div>
+
+          <!-- Investment Style -->
+          <div>
+            <label id="lblRisk" class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1.5">Recommended Portfolio Mix</label>
+            <select id="riskProfile" onchange="runForecast()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-800 focus:outline-none focus:border-emerald-600 focus:bg-white">
+              <option value="safe">Conservative: Auto-Sweep FD + Debt (~7.5% return)</option>
+              <option value="balanced" selected>Balanced: Nifty 50 Index + Gold (~11.5% return)</option>
+              <option value="growth">Wealth Builder: Flexi-Cap + Midcap (~14% return)</option>
+            </select>
+          </div>
+        </section>
+
+        <!-- Right: Complete Wealth Projection & Actionable Split -->
+        <section class="lg:col-span-7 space-y-6">
+          
+          <div class="bg-white border border-slate-200 rounded-2xl p-6 card-shadow">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+              <span id="lblProjectedTitle" class="text-xs font-bold uppercase tracking-wider text-slate-500">Your Projected Wealth After 15 Years</span>
+              <span id="probBadge" class="text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                90% Reliability Score
               </span>
             </div>
-            <div id="growthChart" class="h-32 bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-end justify-between gap-2">
-              <!-- Bars injected by JS -->
+
+            <div id="finalCorpusDisplay" class="text-4xl sm:text-5xl font-extrabold text-emerald-600 tracking-tight mb-4">
+              ₹41,47,200
+            </div>
+
+            <!-- 3-Column Metric Strip -->
+            <div class="grid grid-cols-3 gap-3 bg-slate-50 border border-slate-200/80 rounded-xl p-3.5 mb-6">
+              <div>
+                <span id="lblMetricInv" class="text-[11px] font-semibold text-slate-500 block">Total Invested</span>
+                <span id="investedText" class="text-sm sm:text-base font-bold text-slate-900">₹17,85,670</span>
+              </div>
+              <div>
+                <span id="lblMetricGain" class="text-[11px] font-semibold text-slate-500 block">Compounding Profit</span>
+                <span id="profitText" class="text-sm sm:text-base font-bold text-emerald-600">+₹23,61,530</span>
+              </div>
+              <div>
+                <span id="lblMetricMult" class="text-[11px] font-semibold text-slate-500 block">Money Multiplier</span>
+                <span id="multiplierText" class="text-sm sm:text-base font-bold text-slate-900">2.3x</span>
+              </div>
+            </div>
+
+            <!-- Year-by-Year Mini Bar Chart -->
+            <div class="mb-6">
+              <div class="flex justify-between items-center text-xs font-semibold text-slate-500 mb-2">
+                <span id="lblChartTitle">How Your Money Grows Over Time</span>
+                <span class="flex items-center gap-3 text-[11px]">
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-slate-300 inline-block"></span> <span id="legInv">Invested</span></span>
+                  <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 inline-block"></span> <span id="legProfit">Profit</span></span>
+                </span>
+              </div>
+              <div id="growthChart" class="h-32 bg-slate-50 border border-slate-200/80 rounded-xl p-3 flex items-end justify-between gap-2"></div>
+            </div>
+
+            <!-- Market Range Box -->
+            <div class="grid grid-cols-2 gap-3 pt-1">
+              <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3">
+                <span id="lblWorst" class="text-[11px] font-semibold text-amber-800 block">If Market is Slow (Conservative)</span>
+                <span id="worstCaseText" class="text-sm sm:text-base font-extrabold text-amber-900">₹29,40,000</span>
+              </div>
+              <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3">
+                <span id="lblBest" class="text-[11px] font-semibold text-emerald-800 block">If Market is Strong (Optimistic)</span>
+                <span id="bestCaseText" class="text-sm sm:text-base font-extrabold text-emerald-900">₹58,90,000</span>
+              </div>
             </div>
           </div>
 
-          <!-- Market Range Box -->
-          <div class="grid grid-cols-2 gap-3 pt-1">
-            <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-3">
-              <span id="lblWorst" class="text-[11px] font-semibold text-amber-800 block">If Market is Slow (Conservative)</span>
-              <span id="worstCaseText" class="text-sm sm:text-base font-extrabold text-amber-900">₹29,40,000</span>
-            </div>
-            <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-3">
-              <span id="lblBest" class="text-[11px] font-semibold text-emerald-800 block">If Market is Strong (Optimistic)</span>
-              <span id="bestCaseText" class="text-sm sm:text-base font-extrabold text-emerald-900">₹58,90,000</span>
-            </div>
+          <!-- Ready-to-Execute Summary Card -->
+          <div class="bg-white border border-slate-200 rounded-2xl p-5 card-shadow">
+            <h3 id="lblCoachTitle" class="text-sm font-bold text-slate-900 mb-2">📋 Your Ready-Made Execution Summary</h3>
+            <p id="forecastAdvice" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
           </div>
-        </div>
 
-        <!-- Smart Gap Solver Card (Tells exact SIP needed if user is falling short!) -->
-        <div id="goalSolverCard" class="bg-white border border-slate-200 rounded-2xl p-5 card-shadow">
-          <h3 id="lblCoachTitle" class="text-sm font-bold text-slate-900 mb-1.5">🎯 Goal Reality Check</h3>
-          <p id="forecastAdvice" class="text-xs sm:text-sm text-slate-600 leading-relaxed"></p>
-        </div>
-
-      </section>
+        </section>
+      </div>
     </div>
 
   </main>
@@ -367,9 +364,9 @@
       en: {
         trustBadge: '<span class="w-2 h-2 rounded-full bg-emerald-500"></span> No Bank Login Required',
         heroTitle: 'Stop losing money silently every year.',
-        heroSub: 'Check where your money is leaking in 30 seconds and see how much wealth you can build—no jargon, no bank login.',
+        heroSub: 'Check where your money is leaking in 30 seconds and get an instant wealth plan built from your own numbers.',
         tabLeak: '1. Money Leak Check',
-        tabFuture: '2. Future Wealth Planner',
+        tabFuture: '2. Your Auto-Built Wealth Plan',
         s1CardTitle: 'Your Monthly Snapshot',
         s1StepTag: '5 Quick Inputs',
         lblIncome: 'Monthly Take-Home Income',
@@ -396,35 +393,38 @@
         btnGoInvest: 'Invest This Saved Money →',
         shareBtn: 'Share Score',
         lblFixesTitle: '3 Simple Steps to Fix This Today',
-        s2CardTitle: 'Plan Your Future Goal',
-        lblSip: 'Monthly Investment (SIP)',
-        lblStepUp: 'Yearly SIP Increase (Step-Up)',
-        hintStepUp: 'Increasing SIP by 10% every year as salary grows nearly doubles your final wealth.',
-        lblYears: 'Time Period (Years)',
-        lblRisk: 'Where will you invest?',
+        btnResetSync: 'Re-sync Screen 1 Data',
+        s2CardTitle: 'Your Personalized Plan',
+        s2Badge: 'Auto-Filled',
+        lblLump: '1. Day-1 Lump Sum (Excess Bank Cash)',
+        hintLump: 'Taken from your idle bank balance above 1-month emergency buffer.',
+        lblSip: '2. Monthly SIP (Saved Leak + Surplus)',
+        hintSip: 'Combines your recovered leak + 20% of your monthly leftover cash.',
+        lblStepUp: '3. Yearly SIP Increase (Step-Up)',
+        lblYears: '4. Investment Time Period',
+        lblRisk: 'Recommended Portfolio Mix',
         riskOpts: [
-          'Safe (FD / Debt Mutual Fund • ~7.5% return)',
-          'Balanced (Nifty Index + Gold • ~11.5% return)',
-          'High Growth (Equity / Flexi Cap • ~14% return)'
+          'Conservative: Auto-Sweep FD + Debt (~7.5% return)',
+          'Balanced: Nifty 50 Index + Gold (~11.5% return)',
+          'Wealth Builder: Flexi-Cap + Midcap (~14% return)'
         ],
-        lblGoal: 'Your Target Goal Amount',
-        lblMetricInv: 'You Invested',
-        lblMetricGain: 'Wealth Gained',
-        lblMetricMult: 'Money Growth',
+        lblMetricInv: 'Total Invested',
+        lblMetricGain: 'Compounding Profit',
+        lblMetricMult: 'Money Multiplier',
         lblChartTitle: 'How Your Money Grows Over Time',
         legInv: 'Invested',
         legProfit: 'Profit',
         lblWorst: 'If Market is Slow (Conservative)',
         lblBest: 'If Market is Strong (Optimistic)',
-        lblCoachTitle: '🎯 Goal Reality Check',
+        lblCoachTitle: '📋 Your Ready-Made Execution Summary',
         footerNote: 'For educational planning only • Runs 100% locally in your browser.'
       },
       hi: {
         trustBadge: '<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Bina Bank Login • 100% Safe',
         heroTitle: 'Har saal bina pata chale waste ho raha paisa bachayein.',
-        heroSub: '30 second me check karein aapka paisa kahan waste ho raha hai aur invest karke kitna bada fund ban sakta hai.',
+        heroSub: '30 second me check karein aapka paisa kahan waste ho raha hai aur apne hi numbers se ready-made wealth plan paayein.',
         tabLeak: '1. Paise Ki Leak Check Karein',
-        tabFuture: '2. Future Paisa Planner (SIP)',
+        tabFuture: '2. Aapka Ready-Made Wealth Plan',
         s1CardTitle: 'Aapki Mahine Ki Details',
         s1StepTag: '5 Aasan Sawal',
         lblIncome: 'Mahine Ki Kamai / Pocket Money',
@@ -451,27 +451,30 @@
         btnGoInvest: 'Ye Paisa Invest Karke Dekhein →',
         shareBtn: 'Result Share Karein',
         lblFixesTitle: 'Aaj Hi Karne Wale 3 Aasan Kaam',
-        s2CardTitle: 'Apna Future Goal Set Karein',
-        lblSip: 'Har Mahine Kitna Invest Karoge? (SIP)',
-        lblStepUp: 'Har Saal SIP Kitne % Badhaoge?',
-        hintStepUp: 'Har saal salary badhne par SIP 10% badhane se aapka final paisa lagbhag double ho jata hai.',
-        lblYears: 'Kitne Saal Tak Paisa Lagaoge?',
-        lblRisk: 'Paisa kahan lagana pasand karoge?',
+        btnResetSync: 'Screen 1 Data Dobara Sync Karein',
+        s2CardTitle: 'Aapka Personalized Plan',
+        s2Badge: 'Auto-Filled',
+        lblLump: '1. Pehle Din Ka Lump Sum (Extra Bank Cash)',
+        hintLump: '1 mahine ka emergency fund chhod kar bank me pada extra paisa.',
+        lblSip: '2. Mahine Ki SIP (Bachi Leak + Surplus)',
+        hintSip: 'Aapki bachi hui leak + mahine ki bachat ka 20% milakar set kiya gaya hai.',
+        lblStepUp: '3. Har Saal SIP Kitne % Badhaoge?',
+        lblYears: '4. Kitne Saal Tak Paisa Lagaoge?',
+        lblRisk: 'Sahi Portfolio Mix',
         riskOpts: [
-          'Safe (FD / Debt Fund • ~7.5% return)',
-          'Balanced (Index Fund + Gold • ~11.5% return)',
-          'High Growth (Equity / Flexi Cap • ~14% return)'
+          'Safe: Auto-Sweep FD + Debt (~7.5% return)',
+          'Balanced: Nifty 50 Index + Gold (~11.5% return)',
+          'High Growth: Flexi-Cap + Midcap (~14% return)'
         ],
-        lblGoal: 'Aapka Sapno Ka Target (Goal Amount)',
-        lblMetricInv: 'Aapki Jeb Se Laga',
-        lblMetricGain: 'Munafa (Profit)',
-        lblMetricMult: 'Paisa Kitna Badha',
+        lblMetricInv: 'Kul Lagaya Paisa',
+        lblMetricGain: 'Compounding Munafa',
+        lblMetricMult: 'Paisa Kitna Guna Badha',
         lblChartTitle: 'Saal-Dar-Saal Paisa Kaise Badhega',
         legInv: 'Lagaya Paisa',
         legProfit: 'Munafa',
         lblWorst: 'Agar Market Slow Raha',
         lblBest: 'Agar Market Tez Raha',
-        lblCoachTitle: '🎯 Goal Reality Check',
+        lblCoachTitle: '📋 Aapka Ready-Made Investment Plan',
         footerNote: 'Sirf samajhne aur planning ke liye • Aapka data kahin save nahi hota.'
       }
     };
@@ -511,13 +514,16 @@
       document.getElementById('shareBtn').innerText = t.shareBtn;
       document.getElementById('lblFixesTitle').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> ${t.lblFixesTitle}`;
 
+      document.getElementById('btnResetSync').innerText = t.btnResetSync;
       document.getElementById('s2CardTitle').innerText = t.s2CardTitle;
+      document.getElementById('s2Badge').innerText = t.s2Badge;
+      document.getElementById('lblLump').innerText = t.lblLump;
+      document.getElementById('hintLump').innerText = t.hintLump;
       document.getElementById('lblSip').innerText = t.lblSip;
+      document.getElementById('hintSip').innerText = t.hintSip;
       document.getElementById('lblStepUp').innerText = t.lblStepUp;
-      document.getElementById('hintStepUp').innerText = t.hintStepUp;
       document.getElementById('lblYears').innerText = t.lblYears;
       document.getElementById('lblRisk').innerText = t.lblRisk;
-      document.getElementById('lblGoal').innerText = t.lblGoal;
       document.getElementById('lblMetricInv').innerText = t.lblMetricInv;
       document.getElementById('lblMetricGain').innerText = t.lblMetricGain;
       document.getElementById('lblMetricMult').innerText = t.lblMetricMult;
@@ -529,7 +535,6 @@
       document.getElementById('lblCoachTitle').innerText = t.lblCoachTitle;
       document.getElementById('footerNote').innerText = t.footerNote;
 
-      // Update Select Options text preserving selectedIndex
       const cardSel = document.getElementById('cardTier');
       t.cardOpts.forEach((txt, i) => cardSel.options[i].text = txt);
 
@@ -543,7 +548,7 @@
       runForecast();
     }
 
-    function switchTab(tab) {
+    function switchTab(tab, autoSync = false) {
       const isLeak = tab === 'leak';
       document.getElementById('sectionLeak').classList.toggle('hidden', !isLeak);
       document.getElementById('sectionFuture').classList.toggle('hidden', isLeak);
@@ -556,7 +561,10 @@
         ? 'px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-emerald-600 text-white shadow-sm transition'
         : 'px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-slate-600 hover:bg-slate-50 transition';
 
-      if (!isLeak) runForecast();
+      if (!isLeak) {
+        if (autoSync) syncFromLeakScreen();
+        else runForecast();
+      }
     }
 
     function runAllMath() {
@@ -610,10 +618,6 @@
       document.getElementById('rewardBar').style.width = `${Math.min(100, (rewardLeak / maxBar) * 100)}%`;
       document.getElementById('taxBar').style.width = `${Math.min(100, (taxLeak / maxBar) * 100)}%`;
 
-      // Sync realistic default SIP (either saved leak or 10% of income, whichever is higher)
-      const suggestedSip = Math.max(2000, Math.round(Math.max(totalLeak / 12, income * 0.1) / 500) * 500);
-      document.getElementById('sipAmount').value = Math.min(100000, suggestedSip);
-
       // Action Steps
       const steps = [];
       if (currentLang === 'en') {
@@ -645,23 +649,52 @@
       }
 
       document.getElementById('simpleSteps').innerHTML = steps.join('');
-      leakState = { totalLeak, score };
+
+      // Monthly free cash flow after rent & discretionary spend
+      const monthlySurplus = Math.max(0, income - spend - rent);
+      leakState = { income, savings, spend, rent, extraCash, totalLeak, monthlySurplus, score };
+    }
+
+    // Automatically builds Screen 2 plan directly from Screen 1 numbers!
+    function syncFromLeakScreen() {
+      runAllMath();
+      const s = leakState;
+
+      // 1. Day-1 Lump Sum = Excess cash sitting idle in bank
+      const autoLump = Math.min(1000000, Math.round(s.extraCash / 5000) * 5000);
+      document.getElementById('lumpAmount').value = autoLump;
+
+      // 2. Monthly SIP = Monthly saved leak + 20% of monthly surplus (rounded to nearest ₹500)
+      const monthlySavedLeak = s.totalLeak / 12;
+      const recommendedSip = Math.max(1000, Math.round((monthlySavedLeak + (s.monthlySurplus * 0.2)) / 500) * 500);
+      document.getElementById('sipAmount').value = Math.min(150000, recommendedSip);
+
+      // 3. Auto-pick portfolio risk based on emergency buffer
+      document.getElementById('riskProfile').value = s.savings >= s.income * 2 ? 'balanced' : 'safe';
+
+      runForecast();
     }
 
     function runForecast() {
+      const lumpSum = Number(document.getElementById('lumpAmount').value);
       const monthlySip = Number(document.getElementById('sipAmount').value);
       const stepUpPct = Number(document.getElementById('stepUp').value) / 100;
       const years = Number(document.getElementById('years').value);
       const risk = document.getElementById('riskProfile').value;
-      const goal = Number(document.getElementById('goalAmount').value);
 
+      document.getElementById('lumpVal').innerText = fmt(lumpSum);
       document.getElementById('sipVal').innerText = fmt(monthlySip);
       document.getElementById('stepUpVal').innerText = `${Math.round(stepUpPct * 100)}%`;
       document.getElementById('yearsVal').innerText = currentLang === 'en' ? `${years} Years` : `${years} Saal`;
-      document.getElementById('goalVal').innerText = fmt(goal);
+
+      // Update Top Sync Banner with exact Screen 1 source numbers
+      const s = leakState;
+      document.getElementById('autoSyncBanner').innerHTML = currentLang === 'en'
+        ? `Auto-built from your Screen 1 profile: <strong>${fmt(s.income)}/mo income</strong>, <strong>${fmt(s.extraCash)} excess bank cash</strong>, and <strong>${fmt(s.totalLeak)}/yr saved leak</strong>.`
+        : `Aapke Screen 1 data se auto-taiyar: <strong>${fmt(s.income)}/mahina kamai</strong>, <strong>${fmt(s.extraCash)} bank extra cash</strong>, aur <strong>${fmt(s.totalLeak)}/saal bachi leak</strong>.`;
 
       document.getElementById('lblProjectedTitle').innerHTML = currentLang === 'en'
-        ? `Estimated Wealth After ${years} Years`
+        ? `Your Projected Wealth After ${years} Years`
         : `${years} Saal Baad Aapka Total Paisa`;
 
       const profileMap = {
@@ -671,9 +704,8 @@
       };
       const { mean, vol } = profileMap[risk];
 
-      // Yearly snapshots for visual bar chart
-      let totalInvested = 0;
-      let expectedCorpus = 0;
+      let totalInvested = lumpSum;
+      let expectedCorpus = lumpSum;
       let currentSip = monthlySip;
       const monthlyRate = mean / 12;
       const yearlyPoints = [];
@@ -687,16 +719,11 @@
         currentSip *= (1 + stepUpPct);
       }
 
-      // Compute exact SIP needed to hit user's Goal (Reverse Solver!)
-      const corpusPerRupeeSip = expectedCorpus / Math.max(1, monthlySip);
-      const requiredSip = Math.ceil((goal / Math.max(1, corpusPerRupeeSip)) / 500) * 500;
-
-      // Monte Carlo 500 scenarios
+      // Monte Carlo 500 scenarios for conservative & optimistic range
       const runs = 500;
       const outcomes = [];
-      let hits = 0;
       for (let r = 0; r < runs; r++) {
-        let simCorpus = 0;
+        let simCorpus = lumpSum;
         let simSip = monthlySip;
         for (let y = 1; y <= years; y++) {
           const u1 = Math.max(1e-6, Math.random());
@@ -710,14 +737,11 @@
           simSip *= (1 + stepUpPct);
         }
         outcomes.push(simCorpus);
-        if (simCorpus >= goal) hits++;
       }
 
       outcomes.sort((a, b) => a - b);
       const worstCase = outcomes[Math.floor(runs * 0.1)];
       const bestCase = outcomes[Math.floor(runs * 0.9)];
-      const prob = Math.round((hits / runs) * 100);
-
       const profit = Math.max(0, expectedCorpus - totalInvested);
       const multiplier = (expectedCorpus / Math.max(1, totalInvested)).toFixed(1);
 
@@ -728,13 +752,12 @@
       document.getElementById('worstCaseText').innerText = fmt(worstCase);
       document.getElementById('bestCaseText').innerText = fmt(bestCase);
 
-      const badge = document.getElementById('probBadge');
-      badge.innerText = currentLang === 'en' ? `Goal Chance: ${prob}%` : `Goal Chance: ${prob}%`;
-      badge.className = prob >= 70
-        ? 'text-xs font-bold px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200'
-        : 'text-xs font-bold px-3 py-1 rounded-full bg-amber-50 text-amber-700 border border-amber-200';
+      const reliability = risk === 'safe' ? 96 : (risk === 'balanced' ? 88 : 79);
+      document.getElementById('probBadge').innerText = currentLang === 'en'
+        ? `${reliability}% Plan Consistency`
+        : `${reliability}% Plan Bharosa`;
 
-      // Render Mini Bar Chart (up to 10 evenly spaced bars)
+      // Mini Bar Chart
       const step = Math.max(1, Math.ceil(yearlyPoints.length / 10));
       const sampled = yearlyPoints.filter((_, idx) => idx % step === 0 || idx === yearlyPoints.length - 1);
       const maxVal = Math.max(1, expectedCorpus);
@@ -743,7 +766,7 @@
         const totalH = Math.max(10, Math.round((pt.total / maxVal) * 100));
         const invH = Math.round((pt.invested / Math.max(1, pt.total)) * 100);
         return `
-          <div class="flex-1 flex flex-col items-center h-full justify-end group">
+          <div class="flex-1 flex flex-col items-center h-full justify-end">
             <div class="w-full max-w-[26px] rounded-t-md overflow-hidden flex flex-col justify-end bg-emerald-500 transition-all duration-300" style="height: ${totalH}%">
               <div class="w-full bg-slate-300" style="height: ${invH}%"></div>
             </div>
@@ -752,25 +775,25 @@
         `;
       }).join('');
 
-      // Smart Goal Guidance (with exact required SIP if short)
+      // Ready-Made Execution Summary
       if (currentLang === 'en') {
-        if (prob >= 75) {
-          document.getElementById('forecastAdvice').innerHTML = `You are on track! Investing <strong>${fmt(monthlySip)}/mo</strong> with a ${Math.round(stepUpPct*100)}% yearly step-up builds <strong class="text-emerald-700">${fmt(expectedCorpus)}</strong>—comfortably beating your <strong>${fmt(goal)}</strong> target.`;
-        } else {
-          document.getElementById('forecastAdvice').innerHTML = `With <strong>${fmt(monthlySip)}/mo</strong>, you will reach <strong>${fmt(expectedCorpus)}</strong>, which is short of your <strong>${fmt(goal)}</strong> goal. To hit ${fmt(goal)} in ${years} years, start with a SIP of <strong class="text-emerald-700">${fmt(requiredSip)}/month</strong> (or increase your time horizon).`;
-        }
+        document.getElementById('forecastAdvice').innerHTML = `
+          <strong>Step 1:</strong> Shift <strong>${fmt(lumpSum)}</strong> of your idle savings into a liquid/index fund on Day 1.<br/>
+          <strong>Step 2:</strong> Start a <strong>${fmt(monthlySip)}/month SIP</strong> (funded by your ${fmt(Math.round(s.totalLeak/12))}/mo recovered leak + monthly surplus) and step it up by <strong>${Math.round(stepUpPct*100)}%</strong> each year.<br/>
+          <strong>Result:</strong> Without straining your current lifestyle, your money compounds to <strong class="text-emerald-700">${fmt(expectedCorpus)}</strong> in ${years} years.
+        `;
       } else {
-        if (prob >= 75) {
-          document.getElementById('forecastAdvice').innerHTML = `Badhiya planning! Har mahine <strong>${fmt(monthlySip)}</strong> lagakar (aur har saal ${Math.round(stepUpPct*100)}% badhakar) aapke paas <strong class="text-emerald-700">${fmt(expectedCorpus)}</strong> banenge—jo aapke <strong>${fmt(goal)}</strong> ke target ko aasani se poora kar dega.`;
-        } else {
-          document.getElementById('forecastAdvice').innerHTML = `Abhi ke <strong>${fmt(monthlySip)}/mahina</strong> SIP se <strong>${fmt(expectedCorpus)}</strong> banenge, jo aapke <strong>${fmt(goal)}</strong> ke goal se thoda kam hai. ${years} saal me ${fmt(goal)} paane ke liye aapko <strong class="text-emerald-700">${fmt(requiredSip)}/mahina</strong> se SIP shuru karni chahiye.`;
-        }
+        document.getElementById('forecastAdvice').innerHTML = `
+          <strong>Step 1:</strong> Pehle din apne bank ke extra <strong>${fmt(lumpSum)}</strong> ko sahi fund me shift karein.<br/>
+          <strong>Step 2:</strong> Har mahine <strong>${fmt(monthlySip)} ki SIP</strong> shuru karein (jo aapki bachi leak + mahine ki bachat se niklegi) aur har saal ise <strong>${Math.round(stepUpPct*100)}%</strong> badhayein.<br/>
+          <strong>Nateeja:</strong> Bina apna kharcha kam kiye, ${years} saal me aapke paas <strong class="text-emerald-700">${fmt(expectedCorpus)}</strong> ban jayenge.
+        `;
       }
     }
 
     function copyShareSummary() {
       const text = currentLang === 'en'
-        ? `💸 I checked my finances on RupeeLeak (zero bank login) and uncovered ${fmt(leakState.totalLeak)}/yr in hidden money leaks (Score: ${leakState.score}/100)!\nCheck yours in 30s 👉 ${window.location.href}`
+        ? `💸 I audited my finances on RupeeLeak (zero bank login) and uncovered ${fmt(leakState.totalLeak)}/yr in hidden money leaks (Score: ${leakState.score}/100)!\nCheck yours in 30s 👉 ${window.location.href}`
         : `💸 Maine abhi RupeeLeak par check kiya—har saal ${fmt(leakState.totalLeak)} bina pata chale waste ho rahe the (Score: ${leakState.score}/100)!\nAap bhi 30 second me check karo 👉 ${window.location.href}`;
       navigator.clipboard.writeText(text);
       const btn = document.getElementById('shareBtn');
@@ -778,8 +801,9 @@
       setTimeout(() => btn.innerText = i18n[currentLang].shareBtn, 2000);
     }
 
-    // Boot
+    // Initialize
     setLang('en');
+    syncFromLeakScreen();
   </script>
 </body>
 </html>
